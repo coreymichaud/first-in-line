@@ -13,3 +13,7 @@ dependencies = [
 
 [tool.playwright]
 install = true
+
+packages = [
+  "first_in_line"
+]
