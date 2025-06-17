@@ -1,0 +1,15 @@
+[project]
+name = "first-in-line"
+version = "0.1.0"
+description = "Job scraper that texts you right when a job is posted."
+authors = [{ name = "Corey Michaud", email = "cor3y.michaud@gmail.com" }]
+requires-python = ">=3.9"
+
+dependencies = [
+    "playwright",
+    "aiohttp",
+    "python-dotenv"
+]
+
+[tool.playwright]
+install = true
