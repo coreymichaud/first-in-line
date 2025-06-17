@@ -33,7 +33,7 @@ jobs:
           echo "Starting scraper loop..."
           for i in {1..100}; do
             echo "Running main.py attempt #$i"
-            python main.py || echo "main.py exited with code $?"
+            python src/main.py || echo "src/main.py exited with code $?"
             echo "Waiting 3 seconds before retrying..."
             sleep 3
           done
