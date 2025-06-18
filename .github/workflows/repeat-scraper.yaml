@@ -1,8 +1,8 @@
-name: Run Scraper Every 45 Minutes
+name: Run Scraper Every 25 Minutes
 
 on:
   schedule:
-    - cron: '*/25 * * * *'  # Runs every 45 minutes
+    - cron: '*/25 * * * *'  # Runs every 25 minutes
   workflow_dispatch:        # Allows manual trigger from GitHub UI
 
 jobs:
@@ -40,7 +40,7 @@ jobs:
       - name: Run scraper in restart loop
         run: |
           echo "Starting scraper loop..."
-          for i in {1..100}; do
+          for i in {1..20}; do
             echo "Running main.py attempt #$i"
             python main.py || echo "main.py exited with code $?"
             echo "Waiting 3 seconds before retrying..."
