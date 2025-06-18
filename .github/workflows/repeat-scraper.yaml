@@ -1,54 +1,54 @@
-name: Run Scraper Every 25 Minutes
+# name: Run Scraper Every 25 Minutes
 
-on:
-  schedule:
-    - cron: '*/25 * * * *'  # Runs every 25 minutes
-  workflow_dispatch:        # Allows manual trigger from GitHub UI
+# on:
+#   schedule:
+#     - cron: '*/25 * * * *'  # Runs every 25 minutes
+#   workflow_dispatch:        # Allows manual trigger from GitHub UI
 
-jobs:
-  run-scraper:
-    runs-on: ubuntu-latest
+# jobs:
+#   run-scraper:
+#     runs-on: ubuntu-latest
 
-    env:
-      DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+#     env:
+#       DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
 
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
+#       - name: Set up Python 3.10
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: '3.10'
 
-      - name: Download previous cache.json (if it exists)
-        uses: actions/download-artifact@v4
-        with:
-          name: job-cache
-          path: .
-        continue-on-error: true
+#       - name: Download previous cache.json (if it exists)
+#         uses: actions/download-artifact@v4
+#         with:
+#           name: job-cache
+#           path: .
+#         continue-on-error: true
 
-      - name: Install dependencies from pyproject.toml
-        run: |
-          python -m pip install --upgrade pip
-          pip install .
+#       - name: Install dependencies from pyproject.toml
+#         run: |
+#           python -m pip install --upgrade pip
+#           pip install .
 
-      - name: Install Playwright browsers
-        run: |
-          python -m playwright install
+#       - name: Install Playwright browsers
+#         run: |
+#           python -m playwright install
 
-      - name: Run scraper in restart loop
-        run: |
-          echo "Starting scraper loop..."
-          for i in {1..20}; do
-            echo "Running main.py attempt #$i"
-            python src/main.py || echo "src/main.py exited with code $?"
-            echo "Waiting 3 seconds before retrying..."
-            sleep 3
-          done
+#       - name: Run scraper in restart loop
+#         run: |
+#           echo "Starting scraper loop..."
+#           for i in {1..20}; do
+#             echo "Running main.py attempt #$i"
+#             python src/main.py || echo "src/main.py exited with code $?"
+#             echo "Waiting 3 seconds before retrying..."
+#             sleep 3
+#           done
 
-      - name: Upload updated cache.json
-        uses: actions/upload-artifact@v4
-        with:
-          name: job-cache
-          path: cache.json
+#       - name: Upload updated cache.json
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: job-cache
+#           path: cache.json
